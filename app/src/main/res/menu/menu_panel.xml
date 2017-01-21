@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/food"
+        android:icon="@drawable/ic_local_dining_white_24dp"
+        android:title="Food" />
+
+    <item
+        android:id="@+id/drink"
+        android:icon="@drawable/ic_local_drink_white_24dp"
+        android:title="Drink" />
+
+    <item
+        android:id="@+id/food2"
+        android:icon="@drawable/ic_local_dining_white_24dp"
+        android:title="Food" />
+
+    <item
+        android:id="@+id/See2"
+        android:icon="@drawable/ic_local_see_white_24dp"
+        android:title="See" />
+
+    <item
+        android:id="@+id/food3"
+        android:icon="@drawable/ic_local_dining_white_24dp"
+        android:title="Food" />
+
+    <item
+        android:id="@+id/drink2"
+        android:icon="@drawable/ic_local_drink_white_24dp"
+        android:title="Drink" />
+
+    <item
+        android:id="@+id/food11"
+        android:icon="@drawable/ic_local_dining_white_24dp"
+        android:title="Food" />
+
+    <item
+        android:id="@+id/drink11"
+        android:icon="@drawable/ic_local_drink_white_24dp"
+        android:title="Drink" />
+
+    <item
+        android:id="@+id/food211"
+        android:icon="@drawable/ic_local_dining_white_24dp"
+        android:title="Food" />
+
+    <item
+        android:id="@+id/See211"
+        android:icon="@drawable/ic_local_see_white_24dp"
+        android:title="See" />
+
+    <item
+        android:id="@+id/food311"
+        android:icon="@drawable/ic_local_dining_white_24dp"
+        android:title="Food" />
+
+    <item
+        android:id="@+id/drink211"
+        android:icon="@drawable/ic_local_drink_white_24dp"
+        android:title="Drink" />
+
+    <item
+        android:id="@+id/food22"
+        android:icon="@drawable/ic_local_dining_white_24dp"
+        android:title="Food" />
+
+    <item
+        android:id="@+id/drink22"
+        android:icon="@drawable/ic_local_drink_white_24dp"
+        android:title="Drink" />
+
+    <item
+        android:id="@+id/food222"
+        android:icon="@drawable/ic_local_dining_white_24dp"
+        android:title="Food" />
+
+    <item
+        android:id="@+id/See222"
+        android:icon="@drawable/ic_local_see_white_24dp"
+        android:title="See" />
+
+    <item
+        android:id="@+id/food322"
+        android:icon="@drawable/ic_local_dining_white_24dp"
+        android:title="Food" />
+
+    <item
+        android:id="@+id/drink222"
+        android:icon="@drawable/ic_local_drink_white_24dp"
+        android:title="Drink" />
+
+    <item
+        android:id="@+id/food2233"
+        android:icon="@drawable/ic_local_dining_white_24dp"
+        android:title="Food" />
+
+    <item
+        android:id="@+id/drink2233"
+        android:icon="@drawable/ic_local_drink_white_24dp"
+        android:title="Drink" />
+
+    <item
+        android:id="@+id/food22233"
+        android:icon="@drawable/ic_local_dining_white_24dp"
+        android:title="Food" />
+
+    <item
+        android:id="@+id/See22233"
+        android:icon="@drawable/ic_local_see_white_24dp"
+        android:title="See" />
+
+    <item
+        android:id="@+id/food32233"
+        android:icon="@drawable/ic_local_dining_white_24dp"
+        android:title="Food" />
+
+    <item
+        android:id="@+id/drink22233"
+        android:icon="@drawable/ic_local_drink_white_24dp"
+        android:title="Drink" />
+</menu>
