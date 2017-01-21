@@ -13,8 +13,7 @@
         android:gravity="center"
         android:minHeight="72dp"
         android:minWidth="72dp"
-        android:orientation="vertical"
-        tools:background="#222222">
+        android:orientation="vertical">
 
         <ImageView
             android:id="@+id/image_icon"

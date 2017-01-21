@@ -1,7 +1,6 @@
 package jp.yitt.top_navigation_panel;
 
 import android.animation.Animator;
-import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.IntDef;
@@ -18,7 +17,6 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewPropertyAnimator;
-import android.view.ViewTreeObserver;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
@@ -74,9 +72,11 @@ public class TopNavigationPanel extends FrameLayout {
         inflateLayout(context);
 
         // initialize states
-        state = STATE_HIDDEN;
-        setVisibility(View.INVISIBLE);
-        itemRecycler.setAlpha(0f);
+        if (!isInEditMode()) {
+            state = STATE_HIDDEN;
+            setVisibility(View.INVISIBLE);
+            itemRecycler.setAlpha(0f);
+        }
 
         // Create the menu
         menu = new MenuBuilder(getContext());
@@ -89,7 +89,7 @@ public class TopNavigationPanel extends FrameLayout {
         ViewCompat.setBackground(panelLayout, a.getDrawable(R.styleable.TopNavigationPanel_panel_background));
 
         // panel_menu
-        if (!isInEditMode() && a.hasValue(R.styleable.TopNavigationPanel_panel_menu)) {
+        if (a.hasValue(R.styleable.TopNavigationPanel_panel_menu)) {
             int menuResId = a.getResourceId(R.styleable.TopNavigationPanel_panel_menu, 0);
             inflateMenu(menuResId);
         }
