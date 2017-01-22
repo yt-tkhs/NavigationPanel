@@ -28,7 +28,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 
 
-public class TopNavigationPanel extends FrameLayout {
+public class NavigationPanel extends FrameLayout {
 
     private static final String TAG = "TopNavigationPanel";
 
@@ -71,15 +71,15 @@ public class TopNavigationPanel extends FrameLayout {
 
     private OnItemSelectedListener listener;
 
-    public TopNavigationPanel(Context context) {
+    public NavigationPanel(Context context) {
         this(context, null);
     }
 
-    public TopNavigationPanel(Context context, AttributeSet attrs) {
+    public NavigationPanel(Context context, AttributeSet attrs) {
         this(context, attrs, 0);
     }
 
-    public TopNavigationPanel(Context context, AttributeSet attrs, int defStyleAttr) {
+    public NavigationPanel(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         inflateLayout(context);
 
@@ -95,14 +95,14 @@ public class TopNavigationPanel extends FrameLayout {
 
         // Custom Attributes
         TypedArray a = context.obtainStyledAttributes(
-                attrs, R.styleable.TopNavigationPanel, defStyleAttr, 0);
+                attrs, R.styleable.NavigationPanel, defStyleAttr, 0);
 
         // panel_background
-        ViewCompat.setBackground(panelLayout, a.getDrawable(R.styleable.TopNavigationPanel_panel_background));
+        ViewCompat.setBackground(panelLayout, a.getDrawable(R.styleable.NavigationPanel_panel_background));
 
         // panel_menu
-        if (a.hasValue(R.styleable.TopNavigationPanel_panel_menu)) {
-            int menuResId = a.getResourceId(R.styleable.TopNavigationPanel_panel_menu, 0);
+        if (a.hasValue(R.styleable.NavigationPanel_panel_menu)) {
+            int menuResId = a.getResourceId(R.styleable.NavigationPanel_panel_menu, 0);
             inflateMenu(menuResId);
         }
 

@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import jp.yitt.navigation_panel.OnItemSelectedListener;
-import jp.yitt.navigation_panel.TopNavigationPanel;
+import jp.yitt.navigation_panel.NavigationPanel;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity {
         colorMap.put(R.id.menu_settings, R.color.blue_A200);
 
         final Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        final TopNavigationPanel panel = (TopNavigationPanel) findViewById(R.id.panel);
+        final NavigationPanel panel = (NavigationPanel) findViewById(R.id.panel);
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
         panel.setOnItemSelectedListener(new OnItemSelectedListener() {
             @Override
             public void onItemSelected(@IdRes int itemId) {
-                panel.hide(TopNavigationPanel.MODE_FOCUS);
+                panel.hide(NavigationPanel.MODE_FOCUS);
                 ColoredFragment fragment = ColoredFragment.newInstance(colorMap.get(itemId));
 
                 getSupportFragmentManager().beginTransaction()

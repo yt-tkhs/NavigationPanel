@@ -27,7 +27,7 @@
             android:layout_height="match_parent" />
     </LinearLayout>
 
-    <jp.yitt.navigation_panel.TopNavigationPanel
+    <jp.yitt.navigation_panel.NavigationPanel
         android:id="@+id/panel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

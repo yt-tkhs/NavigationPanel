@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <declare-styleable name="TopNavigationPanel">
+    <declare-styleable name="NavigationPanel">
         <attr name="panel_menu" format="reference" />
         <attr name="panel_background" format="color" />
     </declare-styleable>
