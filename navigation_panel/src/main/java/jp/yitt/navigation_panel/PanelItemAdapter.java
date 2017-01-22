@@ -1,5 +1,7 @@
 package jp.yitt.navigation_panel;
 
+import android.graphics.Color;
+import android.support.annotation.ColorInt;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +21,9 @@ class PanelItemAdapter extends RecyclerView.Adapter<PanelItemAdapter.ViewHolder>
     private OnItemSelectedListener listener;
     private int selectedItemIndex;
 
+    @ColorInt
+    private int itemTextColor;
+
     public PanelItemAdapter(Menu menu) {
         this(menu, -1);
     }
@@ -26,6 +31,7 @@ class PanelItemAdapter extends RecyclerView.Adapter<PanelItemAdapter.ViewHolder>
     public PanelItemAdapter(Menu menu, int selectedItemIndex) {
         this.menu = menu;
         this.selectedItemIndex = selectedItemIndex;
+        this.itemTextColor = Color.WHITE;
     }
 
     @Override
@@ -64,6 +70,10 @@ class PanelItemAdapter extends RecyclerView.Adapter<PanelItemAdapter.ViewHolder>
         return this.selectedItemIndex;
     }
 
+    public void setItemTextColor(@ColorInt int color) {
+        this.itemTextColor = color;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private LinearLayout itemLayout;
@@ -92,6 +102,7 @@ class PanelItemAdapter extends RecyclerView.Adapter<PanelItemAdapter.ViewHolder>
 
             iconImage.setImageDrawable(item.getIcon());
             titleText.setText(item.getTitle());
+            titleText.setTextColor(itemTextColor);
 
             if (position == selectedItemIndex) {
                 itemView.setAlpha(SELECTED_ITEM_ALPHA);

@@ -4,6 +4,10 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
+import android.graphics.drawable.Drawable;
+import android.support.annotation.ColorInt;
+import android.support.annotation.DrawableRes;
 import android.support.annotation.IntDef;
 import android.support.annotation.MenuRes;
 import android.support.v4.view.ViewCompat;
@@ -66,6 +70,9 @@ public class NavigationPanel extends FrameLayout {
     private int navigationButtonCenter = -1;
     private int maxRadius = -1;
 
+    @ColorInt
+    private int itemTextColor;
+
     @State
     private int state;
 
@@ -100,10 +107,20 @@ public class NavigationPanel extends FrameLayout {
         // panel_background
         ViewCompat.setBackground(panelLayout, a.getDrawable(R.styleable.NavigationPanel_panel_background));
 
+        // panel_navigationIcon
+        if (a.hasValue(R.styleable.NavigationPanel_panel_navigationIcon)) {
+            int navigationIconResId = a.getResourceId(R.styleable.NavigationPanel_panel_navigationIcon, 0);
+            navigationButton.setImageResource(navigationIconResId);
+        }
+
+        // panel_itemTextColor
+        itemTextColor = a.getColor(R.styleable.NavigationPanel_panel_itemTextColor, Color.WHITE);
+
         // panel_menu
         if (a.hasValue(R.styleable.NavigationPanel_panel_menu)) {
             int menuResId = a.getResourceId(R.styleable.NavigationPanel_panel_menu, 0);
-            inflateMenu(menuResId);
+            int selectedItemIndex = a.getInt(R.styleable.NavigationPanel_panel_selected, -1);
+            inflateMenu(menuResId, selectedItemIndex);
         }
 
         a.recycle();
@@ -125,6 +142,10 @@ public class NavigationPanel extends FrameLayout {
     }
 
     public void inflateMenu(@MenuRes int menuResId) {
+        inflateMenu(menuResId, -1);
+    }
+
+    public void inflateMenu(@MenuRes int menuResId, int selectedItemIndex) {
         getMenuInflater().inflate(menuResId, menu);
 
         if (gridLayoutManager == null) {
@@ -145,8 +166,10 @@ public class NavigationPanel extends FrameLayout {
 
         if (panelItemAdapter == null) {
             panelItemAdapter = new PanelItemAdapter(menu);
-            panelItemAdapter.setOnItemSelectedListener(listener);
         }
+        panelItemAdapter.setOnItemSelectedListener(listener);
+        panelItemAdapter.setItemTextColor(itemTextColor);
+        panelItemAdapter.setSelectedItemIndex(selectedItemIndex);
 
         int spacingPx = Utils.dpToPx(getContext(), ROW_SPACING_DP);
         itemRecycler.setItemAnimator(null);
@@ -169,6 +192,19 @@ public class NavigationPanel extends FrameLayout {
     @State
     public int getState() {
         return this.state;
+    }
+
+    public void setNavigationIcon(@DrawableRes int resId) {
+        navigationButton.setImageResource(resId);
+    }
+
+    public void setNavigationIcon(Drawable icon) {
+        navigationButton.setImageDrawable(icon);
+    }
+
+    public void setItemTextColor(@ColorInt int color) {
+        panelItemAdapter.setItemTextColor(color);
+        panelItemAdapter.notifyDataSetChanged();
     }
 
     public void expand() {

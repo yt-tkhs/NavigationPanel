@@ -3,5 +3,8 @@
     <declare-styleable name="NavigationPanel">
         <attr name="panel_menu" format="reference" />
         <attr name="panel_background" format="color" />
+        <attr name="panel_navigationIcon" format="reference" />
+        <attr name="panel_itemTextColor" format="color" />
+        <attr name="panel_selected" format="integer" />
     </declare-styleable>
 </resources>
