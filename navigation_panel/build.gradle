@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
     compileSdkVersion 25
@@ -8,7 +9,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
-        versionName "1.0"
+        versionName "0.1"
     }
     buildTypes {
         release {
@@ -16,6 +17,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+}
+
+publish {
+    userOrg = 'yitt'
+    groupId = 'jp.yitt'
+    artifactId = 'navigation_panel'
+    publishVersion = '0.1.0'
+    desc = 'Simple navigation UI library for Android apps'
+    website = 'https://github.com/yt-tkhs/NavigationPanel'
 }
 
 dependencies {
