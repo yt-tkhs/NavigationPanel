@@ -1,7 +1,6 @@
-package jp.yitt.top_navigation_panel;
+package jp.yitt.navigation_panel;
 
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,11 +12,20 @@ import android.widget.TextView;
 
 class PanelItemAdapter extends RecyclerView.Adapter<PanelItemAdapter.ViewHolder> {
 
+    private static final float SELECTED_ITEM_ALPHA = 1f;
+    private static final float NOT_SELECTED_ITEM_ALPHA = 0.55f;
+
     private Menu menu;
     private OnItemSelectedListener listener;
+    private int selectedItemIndex;
 
     public PanelItemAdapter(Menu menu) {
+        this(menu, -1);
+    }
+
+    public PanelItemAdapter(Menu menu, int selectedItemIndex) {
         this.menu = menu;
+        this.selectedItemIndex = selectedItemIndex;
     }
 
     @Override
@@ -29,8 +37,7 @@ class PanelItemAdapter extends RecyclerView.Adapter<PanelItemAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Log.d("Adapter", "onBind");
-        holder.bind(menu.getItem(position));
+        holder.bind(menu.getItem(position), position);
     }
 
     @Override
@@ -46,6 +53,17 @@ class PanelItemAdapter extends RecyclerView.Adapter<PanelItemAdapter.ViewHolder>
         this.listener = listener;
     }
 
+    public void setSelectedItemIndex(int selectedItemIndex) {
+        int oldIndex = this.selectedItemIndex;
+        this.selectedItemIndex = selectedItemIndex;
+        notifyItemChanged(oldIndex);
+        notifyItemChanged(this.selectedItemIndex);
+    }
+
+    public int getSelectedItemIndex() {
+        return this.selectedItemIndex;
+    }
+
     class ViewHolder extends RecyclerView.ViewHolder {
 
         private LinearLayout itemLayout;
@@ -59,11 +77,12 @@ class PanelItemAdapter extends RecyclerView.Adapter<PanelItemAdapter.ViewHolder>
             titleText = (TextView) itemView.findViewById(R.id.text_title);
         }
 
-        void bind(final MenuItem item) {
+        void bind(final MenuItem item, final int position) {
             itemLayout.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View v) {
+                    setSelectedItemIndex(position);
                     if (listener == null) {
                         return;
                     }
@@ -73,6 +92,12 @@ class PanelItemAdapter extends RecyclerView.Adapter<PanelItemAdapter.ViewHolder>
 
             iconImage.setImageDrawable(item.getIcon());
             titleText.setText(item.getTitle());
+
+            if (position == selectedItemIndex) {
+                itemView.setAlpha(SELECTED_ITEM_ALPHA);
+            } else {
+                itemView.animate().alpha(NOT_SELECTED_ITEM_ALPHA).setDuration(250).start();
+            }
         }
     }
 }

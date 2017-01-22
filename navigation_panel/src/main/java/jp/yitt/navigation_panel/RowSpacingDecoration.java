@@ -1,4 +1,4 @@
-package jp.yitt.top_navigation_panel;
+package jp.yitt.navigation_panel;
 
 import android.graphics.Rect;
 import android.support.v7.widget.RecyclerView;

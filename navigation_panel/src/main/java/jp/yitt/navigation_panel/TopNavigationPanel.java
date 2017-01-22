@@ -1,6 +1,7 @@
-package jp.yitt.top_navigation_panel;
+package jp.yitt.navigation_panel;
 
 import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.support.annotation.IntDef;
@@ -18,6 +19,7 @@ import android.view.View;
 import android.view.ViewAnimationUtils;
 import android.view.ViewPropertyAnimator;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -28,6 +30,8 @@ import java.lang.annotation.RetentionPolicy;
 
 public class TopNavigationPanel extends FrameLayout {
 
+    private static final String TAG = "TopNavigationPanel";
+
     public static final int STATE_EXPANDED = 1;
     public static final int STATE_HIDDEN = 2;
 
@@ -36,9 +40,17 @@ public class TopNavigationPanel extends FrameLayout {
     public @interface State {
     }
 
+    public static final int MODE_DEFAULT = 1;
+    public static final int MODE_FOCUS = 2;
+
+    @IntDef({MODE_DEFAULT, MODE_FOCUS})
+    @Retention(RetentionPolicy.SOURCE)
+    public @interface HideMode {
+    }
+
     private static final int ROW_ITEM_NUM = 3;
     private static final int GRID_SPAN_SIZE = 6;
-    private static final int ROW_SPACING_DP = 4;
+    private static final int ROW_SPACING_DP = 24;
 
     // Widgets
     private LinearLayout panelLayout;
@@ -107,7 +119,7 @@ public class TopNavigationPanel extends FrameLayout {
         navigationButton.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                setState(STATE_HIDDEN);
+                hide(MODE_DEFAULT);
             }
         });
     }
@@ -137,6 +149,7 @@ public class TopNavigationPanel extends FrameLayout {
         }
 
         int spacingPx = Utils.dpToPx(getContext(), ROW_SPACING_DP);
+        itemRecycler.setItemAnimator(null);
         itemRecycler.addItemDecoration(new RowSpacingDecoration(spacingPx, ROW_ITEM_NUM));
         itemRecycler.setLayoutManager(gridLayoutManager);
         itemRecycler.setAdapter(panelItemAdapter);
@@ -144,25 +157,13 @@ public class TopNavigationPanel extends FrameLayout {
 
     public void setOnItemSelectedListener(OnItemSelectedListener listener) {
         this.listener = listener;
+        if (panelItemAdapter != null) {
+            panelItemAdapter.setOnItemSelectedListener(listener);
+        }
     }
 
-    public void setState(@State int state) {
-        if (this.state == state) {
-            return;
-        }
-
-        switch (state) {
-            case STATE_EXPANDED:
-                expand();
-                break;
-            case STATE_HIDDEN:
-                hide();
-                break;
-            default:
-                throw new IllegalArgumentException("Illegal state argument: " + state);
-        }
-
-        this.state = state;
+    public void setSelectedItemIndex(int index) {
+        panelItemAdapter.setSelectedItemIndex(index);
     }
 
     @State
@@ -170,9 +171,8 @@ public class TopNavigationPanel extends FrameLayout {
         return this.state;
     }
 
-    private void expand() {
+    public void expand() {
         initAnimationParams();
-        Log.d("Panel", "center:" + navigationButtonCenter + ", maxRadius: " + maxRadius);
         Animator panelAnimator = ViewAnimationUtils.createCircularReveal(this,
                 navigationButtonCenter, navigationButtonCenter, navigationButtonCenter, maxRadius);
         final ViewPropertyAnimator itemsAnimator = itemRecycler.animate()
@@ -186,8 +186,19 @@ public class TopNavigationPanel extends FrameLayout {
         itemsAnimator.start();
     }
 
+    public void hide(@HideMode int hideMode) {
+        if (hideMode == MODE_DEFAULT) {
+            hide();
+        } else if (hideMode == MODE_FOCUS) {
+            hideWithFocusSelected();
+        } else {
+            throw new IllegalArgumentException("Illegal hide mode argument: " + hideMode);
+        }
+    }
+
     private void hide() {
         initAnimationParams();
+
         Animator panelAnimator = ViewAnimationUtils.createCircularReveal(this,
                 navigationButtonCenter, navigationButtonCenter, maxRadius, 0f);
         ViewPropertyAnimator itemsAnimator = itemRecycler.animate()
@@ -196,25 +207,12 @@ public class TopNavigationPanel extends FrameLayout {
                 .setDuration(200)
                 .setInterpolator(new AccelerateDecelerateInterpolator());
 
-        panelAnimator.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-                // do nothing
-            }
-
+        panelAnimator.setDuration(400);
+        panelAnimator.setInterpolator(new DecelerateInterpolator());
+        panelAnimator.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
                 setVisibility(View.INVISIBLE);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-                // do nothing
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-                // do nothing
             }
         });
 
@@ -222,9 +220,38 @@ public class TopNavigationPanel extends FrameLayout {
         panelAnimator.start();
     }
 
+    private void hideWithFocusSelected() {
+        initAnimationParams();
+
+        int selectedItemIndex = panelItemAdapter.getSelectedItemIndex();
+        View view = itemRecycler.findViewHolderForLayoutPosition(selectedItemIndex).itemView;
+        if (view == null) {
+            Log.d(TAG, "item view is null");
+            hide();
+            return;
+        }
+
+        int centerX = (int) (itemRecycler.getX() + view.getX()) + view.getWidth() / 2;
+        int centerY = (int) (itemRecycler.getY() + view.getY()) + view.getHeight() / 2;
+
+        Animator panelAnimator = ViewAnimationUtils.createCircularReveal(this,
+                centerX, centerY, maxRadius, 0f);
+
+        panelAnimator.setDuration(400);
+        panelAnimator.setInterpolator(new DecelerateInterpolator());
+        panelAnimator.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                setVisibility(View.INVISIBLE);
+            }
+        });
+
+        panelAnimator.start();
+    }
+
     private void initAnimationParams() {
         if (navigationButtonCenter <= 0) {
-            navigationButtonCenter = navigationButton.getMeasuredHeight() / 2;
+            navigationButtonCenter = navigationButton.getMeasuredWidth() / 2;
         }
         if (maxRadius <= 0) {
             double a = Math.pow(getWidth() - navigationButtonCenter, 2);

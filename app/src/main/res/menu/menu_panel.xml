@@ -2,33 +2,32 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/food"
-        android:icon="@drawable/ic_local_dining_white_24dp"
-        android:title="Food" />
+        android:id="@+id/menu_schedule"
+        android:icon="@drawable/ic_schedule_white_24dp"
+        android:title="Schedule" />
 
     <item
-        android:id="@+id/drink"
-        android:icon="@drawable/ic_local_drink_white_24dp"
-        android:title="Drink" />
+        android:id="@+id/menu_place"
+        android:icon="@drawable/ic_place_white_24dp"
+        android:title="Place" />
 
     <item
-        android:id="@+id/food2"
-        android:icon="@drawable/ic_local_dining_white_24dp"
-        android:title="Food" />
+        android:id="@+id/menu_cost"
+        android:icon="@drawable/ic_account_balance_wallet_white_24dp"
+        android:title="Cost" />
 
     <item
-        android:id="@+id/See2"
-        android:icon="@drawable/ic_local_see_white_24dp"
-        android:title="See" />
+        android:id="@+id/menu_belonging"
+        android:icon="@drawable/ic_assignment_white_24dp"
+        android:title="Belonging" />
 
     <item
-        android:id="@+id/food3"
-        android:icon="@drawable/ic_local_dining_white_24dp"
-        android:title="Food" />
-
+        android:id="@+id/menu_notebook"
+        android:icon="@drawable/ic_book_white_24dp"
+        android:title="Notebook" />
 
     <item
-        android:id="@+id/food21"
-        android:icon="@drawable/ic_local_dining_white_24dp"
-        android:title="Food" />
+        android:id="@+id/menu_settings"
+        android:icon="@drawable/ic_settings_white_24dp"
+        android:title="Settings" />
 </menu>

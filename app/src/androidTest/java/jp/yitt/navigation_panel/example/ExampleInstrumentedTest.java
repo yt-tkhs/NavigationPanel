@@ -1,4 +1,4 @@
-package jp.yitt.top_navigation_panel.example;
+package jp.yitt.navigation_panel.example;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

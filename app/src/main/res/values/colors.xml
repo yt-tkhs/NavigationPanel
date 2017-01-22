@@ -3,4 +3,11 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="red_A200">#FF5252</color>
+    <color name="pink_A200">#FF4081</color>
+    <color name="purple_A200">#E040FB</color>
+    <color name="deep_purple_A200">#7C4DFF</color>
+    <color name="indigo_A200">#536DFE</color>
+    <color name="blue_A200">#448AFF</color>
 </resources>
