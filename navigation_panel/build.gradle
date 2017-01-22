@@ -20,7 +20,7 @@ android {
 }
 
 publish {
-    userOrg = 'yitt'
+    userOrg = 'yt-tkhs'
     groupId = 'jp.yitt'
     artifactId = 'navigation_panel'
     publishVersion = '0.1.0'
